@@ -6,8 +6,10 @@ import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3IRSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
+import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
 
@@ -28,14 +30,15 @@ public class PinceMain {
 		Port port = LocalEV3.get().getPort("S2");
 
 		// Get an instance of the Ultrasonic EV3 sensor
-		SensorModes sensor = new EV3UltrasonicSensor(port);
+		EV3IRSensor sensor = new EV3IRSensor(port);
 		
 		float distance = localisation.detecte(sensor);
 		
-		System.out.println(distance);
 		
-		LCD.clear(2);
+		LCD.clear();
 		LCD.drawString(" distance: "+distance, 0, 4);
+		
+		sensor.close();
 
 	}
 }
