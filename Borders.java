@@ -14,27 +14,43 @@ public class Borders {
 	public Borders(){
 		this.black = 7;
 		this.white = 6;
+		this.echantillon;
 	}
 	
-	public void Init(EV3ColorSensor sensor){
+	public float Init(EV3ColorSensor sensor){
 		
 		Mouvement mouv = new Mouvement();
 		Localisation loc = new Localisation();
 		
+        	float distance = -1;
+
 		if (sensor.getColorID() != black){
-			System.out.println("le robot n'est pas dans la zone de départ");
+			System.out.println("le robot n'est pas dans la zone de depart");
 		}
 		else{
 			mouv.avancer(10,20);
-			loc.detecte();
+			distance = loc.detecte();
+			if (distance != -1){
+				echantillon = true;
+				break;
+				}
 			mouv.tourner(10,90);
-			loc.detecte();
+			distance = loc.detecte();
+			if (distance != -1){
+				echantillon = true;
+				break;
+				}
 			mouv.tourner(10, 180);
-			loc.detecte();
+			distance = loc.detecte();
+			if (distance != -1){
+				echantillon = true;
+				break;
+				}
 		}
+        return distance;
 	}
 	
-	public void parcours(){
+	public float parcours(){
 		
 		Mouvement mouv = new Mouvement();
 		Localisation loc = new Localisation();
@@ -42,6 +58,7 @@ public class Borders {
 		EV3ColorSensor sensor1 = new EV3ColorSensor(SensorPort.S1);
 		EV3UltrasonicSensor sensor2 = new EV3UltrasonicSensor(SensorPort.S2);
 		
+        	float distance = -1;
 		boolean droite = true;
 		
 		Instant start = Instant.now();
@@ -56,31 +73,40 @@ public class Borders {
 				mouv.avancer(10,5);
 				d++;
 				if(d == 10){
-					loc.detecte(sensor2);
+					distance = loc.detecte(sensor2);
+					if (distance != -1){
+						echantillon = true;
+						break;
+						}
 					d=0;
 				}
 			}
 			if (droite == true){		
 				mouv.avancer(10,-5);
 				mouv.tourner(10,90);
-				loc.detecte(sensor2);
 				mouv.avancer(10,30);
 				mouv.tourner(10,90);
-				loc.detecte(sensor2);
+				distance = loc.detecte(sensor2);
 				droite = false;
 			}
 			else {
 				mouv.avancer(10,-5);
 				mouv.tourner(10,-90);
-				loc.detecte(sensor2);
 				mouv.avancer(10,30);
 				mouv.tourner(10,-90);
-				loc.detecte(sensor2);
+				distance = loc.detecte(sensor2);
 				droite = true;
 			}
+			
+			if (distance != -1){
+				echantillon = true;
+				}
+			
 			finish = Instant.now();
 			timelapse = Duration.between(start,finish).toMillis();
 		}
+        return distance;
 	}
 
 }
+
