@@ -16,14 +16,13 @@ public class localisation {
 		// get an instance of this sensor in measurement mode
 		SampleProvider distance= sensor.getMode("Distance");
 		
-		float[] sample = new float[1];
+		float[] sample = new float[distance.sampleSize()];
 		distance.fetchSample(sample, 0);
-		LCD.clear(2);
-		LCD.drawString(" distance: "+sample[0], 0, 4);
+		Delay.msDelay(100);
 		return sample[0];
-		
 		
 	}
 	
 
+	
 }
