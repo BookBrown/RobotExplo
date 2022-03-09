@@ -11,7 +11,7 @@ public class localisation {
 
 	
 	
-	public static float detecte(SensorModes sensor) {
+	public static float detecte(EV3IRSensor sensor) {
 		
 		// get an instance of this sensor in measurement mode
 		SampleProvider distance= sensor.getMode("Distance");
