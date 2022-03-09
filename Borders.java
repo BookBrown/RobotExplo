@@ -1,3 +1,5 @@
+package robot;
+
 import java.time.Duration;
 import java.time.Instant;
 
@@ -7,20 +9,19 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 public class Borders {
 	
-	protected int black = 7;
-	protected int white = 6;
+	protected int black;
+	protected int white;
 	protected boolean echantillon;
 	
 	public Borders(){
 		this.black = 7;
 		this.white = 6;
-		this.echantillon;
+		this.echantillon = false;
 	}
 	
-	public float Init(EV3ColorSensor sensor){
+	public float Init(EV3ColorSensor sensor, EV3UltrasonicSensor USsensor){
 		
 		Mouvement mouv = new Mouvement();
-		Localisation loc = new Localisation();
 		
         	float distance = -1;
 
@@ -29,36 +30,32 @@ public class Borders {
 		}
 		else{
 			mouv.avancer(10,20);
-			distance = loc.detecte();
+			distance = localisation.detecte(USsensor);
 			if (distance != -1){
 				echantillon = true;
-				break;
+				return distance;
 				}
 			mouv.tourner(10,90);
-			distance = loc.detecte();
+			distance = localisation.detecte(USsensor);
 			if (distance != -1){
 				echantillon = true;
-				break;
+				return distance;
 				}
 			mouv.tourner(10, 180);
-			distance = loc.detecte();
+			distance = localisation.detecte(USsensor);
 			if (distance != -1){
 				echantillon = true;
-				break;
+				return distance;
 				}
 		}
         return distance;
 	}
 	
-	public float parcours(){
+	public float parcours(EV3ColorSensor sensor1, EV3UltrasonicSensor sensor2){
 		
 		Mouvement mouv = new Mouvement();
-		Localisation loc = new Localisation();
 		
-		EV3ColorSensor sensor1 = new EV3ColorSensor(SensorPort.S1);
-		EV3UltrasonicSensor sensor2 = new EV3UltrasonicSensor(SensorPort.S2);
-		
-        	float distance = -1;
+        float distance = -1;
 		boolean droite = true;
 		
 		Instant start = Instant.now();
@@ -73,7 +70,7 @@ public class Borders {
 				mouv.avancer(10,5);
 				d++;
 				if(d == 10){
-					distance = loc.detecte(sensor2);
+					distance = localisation.detecte(sensor2);
 					if (distance != -1){
 						echantillon = true;
 						break;
@@ -86,7 +83,7 @@ public class Borders {
 				mouv.tourner(10,90);
 				mouv.avancer(10,30);
 				mouv.tourner(10,90);
-				distance = loc.detecte(sensor2);
+				distance = localisation.detecte(sensor2);
 				droite = false;
 			}
 			else {
@@ -94,7 +91,7 @@ public class Borders {
 				mouv.tourner(10,-90);
 				mouv.avancer(10,30);
 				mouv.tourner(10,-90);
-				distance = loc.detecte(sensor2);
+				distance = localisation.detecte(sensor2);
 				droite = true;
 			}
 			
@@ -109,4 +106,3 @@ public class Borders {
 	}
 
 }
-
