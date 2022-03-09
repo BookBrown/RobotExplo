@@ -3,15 +3,17 @@ package robot;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3IRSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
+import lejos.utility.Delay;
 
 public class localisation {
 
 	
 	
-	public static float detecte(EV3IRSensor sensor) {
+	public static float detecte(EV3UltrasonicSensor sensor) {
 		
 		// get an instance of this sensor in measurement mode
 		SampleProvider distance= sensor.getMode("Distance");
