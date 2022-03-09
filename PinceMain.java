@@ -30,13 +30,17 @@ public class PinceMain {
 		Port port = LocalEV3.get().getPort("S2");
 
 		// Get an instance of the Ultrasonic EV3 sensor
-		EV3IRSensor sensor = new EV3IRSensor(port);
+		EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(port);
 		
-		float distance = localisation.detecte(sensor);
+		//initialise the motors
+		Mouvement motors = new Mouvement();
+		
+		//on fait maintenant la phase d'approche (on suppose avoir repéré le robot).
 		
 		
-		LCD.clear();
-		LCD.drawString(" distance: "+distance, 0, 4);
+		
+		approche.approcheTarget(sensor, motors);
+		
 		
 		sensor.close();
 
