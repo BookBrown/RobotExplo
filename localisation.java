@@ -13,15 +13,19 @@ public class localisation {
 
 	
 	
-	public static float detecte(EV3UltrasonicSensor sensor) {
-		
-		// get an instance of this sensor in measurement mode
-		SampleProvider distance= sensor.getMode("Distance");
-		
-		float[] sample = new float[distance.sampleSize()];
+	public static float detecte(SampleProvider distance) {
+		float[] sample = new float[1];
 		distance.fetchSample(sample, 0);
 		Delay.msDelay(100);
-		return sample[0];
+		if (sample[0]==Float.intBitsToFloat(0x7f800000)){
+			return -1;
+		}
+		else{
+			if(sample[0]==0){
+				return -1;
+			}
+			return sample[0];
+		}
 		
 	}
 	
