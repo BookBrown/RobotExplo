@@ -14,7 +14,7 @@ public class Pince {
 	 * */
 	public Pince() {
 		Motor.D.setSpeed(300);
-		Motor.D.rotateTo(-600);
+		Motor.D.rotateTo(-500);
 		}
 	
 	public void premiere_recup(int distance) {
@@ -31,7 +31,7 @@ public class Pince {
 		/* Avancer de 4cm */
 		mouv.avancer(10, 6);
 		/* Position stock */
-		Motor.D.rotateTo(-600);
+		Motor.D.rotateTo(-500);
 		Delay.msDelay(1000);
 	}
 	
@@ -47,12 +47,12 @@ public class Pince {
 		mouv.tourner(10, -15);
 		/* Avancer de 4cm */
 		mouv.avancer(10, 6);
-		Motor.D.rotateTo(600);
+		Motor.D.rotateTo(-500);
 	}
 	
 	public void largage() {
 		Motor.D.setSpeed(300);
-		Motor.D.rotateTo(-700);
+		Motor.D.rotateTo(-650);
 	}
 	
 	public void butee() {
