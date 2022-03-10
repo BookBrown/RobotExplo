@@ -10,24 +10,15 @@ import lejos.utility.Delay;
 public class MainEs {
 	public static void main(String[] args) {
 		
-		//Pince pince = new Pince();
-		
-		//Delay.msDelay(2000);
-		
-		//pince.premiere_recup();
-		
-		//pince.deuxieme_recup();
-		
-		//pince.largage();
 		
 		// get a port instance
-		Port port = LocalEV3.get().getPort("S4");
-
+		//Port port = LocalEV3.get().getPort("S4");
+		
 		// Get an instance of the Ultrasonic EV3 sensor
-		EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(port);
+		EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(SensorPort.S4);
 		
 		// get an instance of this sensor in measurement mode
-		SampleProvider distanceSample= sensor.getDistanceMode();
+		SampleProvider distanceSample = sensor.getDistanceMode();
 		
 		float distance = localisation.detecte(distanceSample);
 		
@@ -38,9 +29,7 @@ public class MainEs {
 		//initialise the motors
 		Mouvement motors = new Mouvement();
 		
-		//on fait maintenant la phase d'approche (on suppose avoir repéré le robot).
-		
-		
+		//on fait maintenant la phase d'approche (on suppose avoir repÃ©rÃ© le robot).
 		
 		approche.approcheTarget(distanceSample, motors);
 		
