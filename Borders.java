@@ -23,7 +23,7 @@ public class Borders {
 		
 		Mouvement mouv = new Mouvement();
 		
-        	float distance = -1;
+        float distance = -1;
 
 		if (sensor.getColorID() != black){
 			System.out.println("le robot n'est pas dans la zone de depart");
@@ -51,6 +51,7 @@ public class Borders {
         return distance;
 	}
 	
+	
 	public float parcours(EV3ColorSensor sensor1, EV3UltrasonicSensor sensor2){
 		
 		Mouvement mouv = new Mouvement();
@@ -73,15 +74,21 @@ public class Borders {
 					distance = localisation.detecte(sensor2);
 					if (distance != -1){
 						echantillon = true;
-						break;
+						return distance;
 						}
 					d=0;
 				}
 			}
+			
+			int compteur = 0;
+			
 			if (droite == true){		
 				mouv.avancer(10,-5);
 				mouv.tourner(10,90);
-				mouv.avancer(10,30);
+				while ((sensor1.getColorID() == white) && (compteur < 6)){
+					mouv.avancer(10,5);
+					compteur++;
+				}
 				mouv.tourner(10,90);
 				distance = localisation.detecte(sensor2);
 				droite = false;
@@ -89,7 +96,10 @@ public class Borders {
 			else {
 				mouv.avancer(10,-5);
 				mouv.tourner(10,-90);
-				mouv.avancer(10,30);
+				while ((sensor1.getColorID() == white) && (compteur < 6)){
+					mouv.avancer(10,5);
+					compteur++;
+				}
 				mouv.tourner(10,-90);
 				distance = localisation.detecte(sensor2);
 				droite = true;
@@ -97,6 +107,7 @@ public class Borders {
 			
 			if (distance != -1){
 				echantillon = true;
+				return distance;
 				}
 			
 			finish = Instant.now();
@@ -104,5 +115,4 @@ public class Borders {
 		}
         return distance;
 	}
-
 }
