@@ -10,25 +10,21 @@ import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
 public class localisation {
-
-	
 	
 	public static float detecte(SampleProvider distance) {
-		float[] sample = new float[1];
+		float[] sample = new float[distance.sampleSize()];
 		distance.fetchSample(sample, 0);
 		Delay.msDelay(100);
-		if (sample[0]==Float.intBitsToFloat(0x7f800000)){
+		if (sample.length == 0){
 			return -1;
 		}
-		else{
-			if(sample[0]==0){
+		int index = sample.length - 1;
+		while (!Float.isFinite(sample[index]) || sample[index] == 0){
+			if(index == 0){
 				return -1;
 			}
-			return sample[0];
+			index--;
 		}
-		
+		return sample[index];
 	}
-	
-
-	
 }
