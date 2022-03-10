@@ -12,8 +12,8 @@ import lejos.utility.Delay;
 public class MainGlobal {
 	public static void main(String[] args) {
 		
-		EV3ColorSensor Csensor = new EV3ColorSensor(SensorPort.S1);
-		EV3UltrasonicSensor USsensor = new EV3UltrasonicSensor(SensorPort.S2);
+		EV3ColorSensor Csensor = new EV3ColorSensor(SensorPort.S3);
+		EV3UltrasonicSensor USsensor = new EV3UltrasonicSensor(SensorPort.S4);
 		
 		Borders bord = new Borders();
 		
@@ -56,8 +56,8 @@ public class MainGlobal {
 		Mouvement mouv = new Mouvement();
 		mouv.tourner(30, 180);
 		DetectionZone zone = new DetectionZone();
-		EV3TouchSensor bouton_g = new EV3TouchSensor(SensorPort.S3);
-		EV3TouchSensor bouton_d = new EV3TouchSensor(SensorPort.S4);
+		EV3TouchSensor bouton_g = new EV3TouchSensor(SensorPort.S1);
+		EV3TouchSensor bouton_d = new EV3TouchSensor(SensorPort.S2);
 		while ((!zone.is_pressed(bouton_g)) && (!zone.is_pressed(bouton_d))){
 			mouv.reculer(5, 1);
 		}

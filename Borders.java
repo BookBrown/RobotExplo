@@ -6,6 +6,7 @@ import java.time.Instant;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.robotics.SampleProvider;
 
 public class Borders {
 	
@@ -19,7 +20,7 @@ public class Borders {
 		this.echantillon = false;
 	}
 	
-	public float Init(EV3ColorSensor Csensor, EV3UltrasonicSensor USsensor){
+	public float Init(EV3ColorSensor Csensor, SampleProvider USsensor){
 		
 		Mouvement mouv = new Mouvement();
 		
@@ -52,7 +53,7 @@ public class Borders {
 	}
 	
 	
-	public float parcours(EV3ColorSensor Csensor, EV3UltrasonicSensor USsensor){
+	public float parcours(EV3ColorSensor Csensor, SampleProvider USsensor){
 		
 		Mouvement mouv = new Mouvement();
 		
