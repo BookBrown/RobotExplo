@@ -5,6 +5,7 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
+import lejos.hardware.port.SensorPort;
 
 
 public class MainEs {
