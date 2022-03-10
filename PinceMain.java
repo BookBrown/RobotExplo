@@ -6,43 +6,53 @@ import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.Port;
-import lejos.hardware.sensor.EV3IRSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
-import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
 
 public class PinceMain {
 	public static void main(String[] args) {
 		
-		//Pince pince = new Pince();
-		
-		//Delay.msDelay(2000);
-		
-		//pince.premiere_recup();
-		
-		//pince.deuxieme_recup();
-		
-		//pince.largage();
+		Pince pince = new Pince();
 		
 		// get a port instance
-		Port port = LocalEV3.get().getPort("S2");
+		Port port = LocalEV3.get().getPort("S4");
 
 		// Get an instance of the Ultrasonic EV3 sensor
-		EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(port);
+		SensorModes sensor = new EV3UltrasonicSensor(port);
 		
-		//initialise the motors
-		Mouvement motors = new Mouvement();
+		float distance_float = localisation.detecte(sensor);	
 		
-		//on fait maintenant la phase d'approche (on suppose avoir repéré le robot).
+		int distance_entiere = (int)distance_float;
 		
+		pince.premiere_recup(distance_entiere);
 		
+		Delay.msDelay(5000);
 		
-		approche.approcheTarget(sensor, motors);
+		float distance_float_bis = localisation.detecte(sensor);	
 		
+		int distance_entiere_bis = (int)distance_float_bis;
 		
-		sensor.close();
+		pince.deuxieme_recup(distance_entiere_bis);
+		
+		Mouvement mouv = new Mouvement();
+		
+		mouv.avancer(20, -20);
+		
+		pince.largage();
+		
+		pince.butee();
+		
+		// get a port instance
+		//Port port = LocalEV3.get().getPort("S2");
+
+		// Get an instance of the Ultrasonic EV3 sensor
+		//SensorModes sensor = new EV3UltrasonicSensor(port);
+		
+		//float distance = localisation.detecte(sensor);
+		
+		//System.out.println(distance);
 
 	}
 }
