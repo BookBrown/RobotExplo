@@ -6,9 +6,9 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 public class approche {
 
 	
-	public static void approcheTarget(EV3UltrasonicSensor USsensor, Mouvement motors){
+	public static void approcheTarget(SampleProvider sample, Mouvement motors){
 		
-		float distance = localisation.detecte(USsensor);
+		float distance = 100*localisation.detecte(sample);
 		float newdistance;
 		
 		float minimum = distance;
@@ -16,7 +16,7 @@ public class approche {
 			int compteurGauche;
 			int compteurDroit;
 		
-		while(distance > 10){
+		while((distance > 20)&&(distance<50)){
 			
 			minimum = distance;
 			angleRelatifMinimum = 0;
@@ -27,40 +27,40 @@ public class approche {
 			
 			motors.avancer(100, 10);
 			
-			newdistance = localisation.detecte(USsensor);
+			newdistance = 100*localisation.detecte(sample);
 			
-			while ((newdistance==-1)&&(compteurGauche <3)){
+			while ((newdistance==-100)&&(compteurGauche <3)){
 				
 				motors.tourner(30,-15);
 				compteurGauche +=1;
 				angleRelatifMinimum +=-15;
-				newdistance = localisation.detecte(USsensor);
+				newdistance = 100*localisation.detecte(sample);
 			}
 			
-			if(newdistance==1){
+			if(newdistance==-100){
 				
-				motors.tourner(100, 60); //on se met 15° à droite de la position initiale
+				motors.tourner(100, 60); //on se met 15Â° Ã  droite de la position initiale
 				angleRelatifMinimum= 15;
 				
-				newdistance = localisation.detecte(USsensor);
+				newdistance = 100*localisation.detecte(sample);
 				
-				while ((newdistance==-1)&&(compteurDroit <3)){
+				while ((newdistance==-100)&&(compteurDroit <3)){
 					
 					motors.tourner(30,15);
 					compteurDroit +=1;
 					angleRelatifMinimum +=15;
-					newdistance = localisation.detecte(USsensor);
+					newdistance = 100*localisation.detecte(sample);
 				}
 				
-				if(newdistance==-1){ //ce cas ne devrait jamais se produire comme on avance de 10 cm en 10 cm.
-					while ((angleRelatifMinimum <321)&&(newdistance==-1)){ //cela correspond à parcourir tous les anles, cela voudrait dire que le robot a perdu la trace de la cible.
+				if(newdistance==-100){ //ce cas ne devrait jamais se produire comme on avance de 10 cm en 10 cm.
+					while ((angleRelatifMinimum <321)&&(newdistance==-100)){ //cela correspond Ã  parcourir tous les anles, cela voudrait dire que le robot a perdu la trace de la cible.
 						motors.tourner(30,15);
 						compteurDroit +=1;
 						angleRelatifMinimum +=15;
-						newdistance = localisation.detecte(USsensor);
+						newdistance = 100*localisation.detecte(sample);
 					}
-					if(newdistance==-1){
-						System.out.println("erreur, le système a été perdu de vue !");
+					if(newdistance==-100){
+						System.out.println("erreur, le systÃ¨me a ete perdu de vue !");
 					}
 				}
 				
@@ -69,14 +69,10 @@ public class approche {
 			}
 			
 			
-			motors.tourner(30, 10);
-			if (newdistance < minimum){
-				minimum = newdistance;
-				angleRelatifMinimum = 0;
-			}
+			distance = newdistance;
 		}
 			
-		while(distance > 5){
+		while((distance > 10)&&(distance<20)){
 			
 			minimum = distance;
 			angleRelatifMinimum = 0;
@@ -85,40 +81,40 @@ public class approche {
 			
 			motors.avancer(10, 1);
 			
-			newdistance = localisation.detecte(USsensor);
+			newdistance = 100*localisation.detecte(sample);
 			
-			while ((newdistance==-1)&&(compteurGauche <3)){
+			while ((newdistance==-100)&&(compteurGauche <3)){
 				
 				motors.tourner(10,-1);
 				compteurGauche +=1;
 				angleRelatifMinimum +=-1;
-				newdistance = localisation.detecte(USsensor);
+				newdistance = 100*localisation.detecte(sample);
 			}
 			
-			if(newdistance==1){
+			if(newdistance==-100){
 				
-				motors.tourner(10, 4); //on se met 15° à droite de la position initiale
+				motors.tourner(10, 4); //on se met 15Â° Ã  droite de la position initiale
 				angleRelatifMinimum= 1;
 				
-				newdistance = localisation.detecte(USsensor);
+				newdistance = 100*localisation.detecte(sample);
 				
-				while ((newdistance==-1)&&(compteurDroit <3)){
+				while ((newdistance==-100)&&(compteurDroit <3)){
 					
 					motors.tourner(10,1);
 					compteurDroit +=1;
 					angleRelatifMinimum +=1;
-					newdistance = localisation.detecte(USsensor);
+					newdistance = 100*localisation.detecte(sample);
 				}
 				
-				if(newdistance==-1){ //ce cas ne devrait jamais se produire comme on avance de 10 cm en 10 cm.
-					while ((angleRelatifMinimum <321)&&(newdistance==-1)){ //cela correspond à parcourir tous les anles, cela voudrait dire que le robot a perdu la trace de la cible.
+				if(newdistance==-100){ //ce cas ne devrait jamais se produire comme on avance de 10 cm en 10 cm.
+					while ((angleRelatifMinimum <321)&&(newdistance==-100)){ //cela correspond Ã  parcourir tous les anles, cela voudrait dire que le robot a perdu la trace de la cible.
 						motors.tourner(10,1);
 						compteurDroit +=1;
 						angleRelatifMinimum +=1;
-						newdistance = localisation.detecte(USsensor);
+						newdistance = 100*localisation.detecte(sample);
 					}
-					if(newdistance==-1){
-						System.out.println("erreur, le système a été perdu de vue !");
+					if(newdistance==-100){
+						System.out.println("erreur, le systÃ¨me a ete perdu de vue !");
 					}
 				}
 				
@@ -127,13 +123,8 @@ public class approche {
 			}
 			
 			
-			motors.tourner(30, 10);
-			if (newdistance < minimum){
-				minimum = newdistance;
-				angleRelatifMinimum = 0;
-			}
+			distance = newdistance;
 		}
 	}
 		
 }
-
