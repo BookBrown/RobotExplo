@@ -24,7 +24,7 @@ public class PinceMain {
 		
 		float distance_float = localisation.detecte(sensor);	
 		
-		int distance_entiere = (int)distance_float;
+		int distance_entiere = (int)(distance_float*100);
 		
 		pince.premiere_recup(distance_entiere);
 		
@@ -32,7 +32,7 @@ public class PinceMain {
 		
 		float distance_float_bis = localisation.detecte(sensor);	
 		
-		int distance_entiere_bis = (int)distance_float_bis;
+		int distance_entiere_bis = (int)(distance_float_bis*100);
 		
 		pince.deuxieme_recup(distance_entiere_bis);
 		
