@@ -11,14 +11,12 @@ public class approche {
 		float distance = 100*localisation.detecte(sample);
 		float newdistance;
 		
-		float minimum = distance;
-			int angleRelatifMinimum;
-			int compteurGauche;
-			int compteurDroit;
+		int angleRelatifMinimum;
+		int compteurGauche;
+		int compteurDroit;
 		
-		while((distance > 20)&&(distance<50)){
+		while((distance >30)&&(distance<50)){
 			
-			minimum = distance;
 			angleRelatifMinimum = 0;
 			compteurGauche = 0;
 			compteurDroit=1;
@@ -60,7 +58,7 @@ public class approche {
 						newdistance = 100*localisation.detecte(sample);
 					}
 					if(newdistance==-100){
-						System.out.println("erreur, le système a ete perdu de vue !");
+						System.out.println("erreur, le systeme a ete perdu de vue !");
 					}
 				}
 				
@@ -72,9 +70,8 @@ public class approche {
 			distance = newdistance;
 		}
 			
-		while((distance > 10)&&(distance<20)){
+		while((distance > 20)&&(distance<30)){
 			
-			minimum = distance;
 			angleRelatifMinimum = 0;
 			compteurGauche = 0;
 			compteurDroit=1;
@@ -108,13 +105,13 @@ public class approche {
 				
 				if(newdistance==-100){ //ce cas ne devrait jamais se produire comme on avance de 10 cm en 10 cm.
 					while ((angleRelatifMinimum <321)&&(newdistance==-100)){ //cela correspond à parcourir tous les anles, cela voudrait dire que le robot a perdu la trace de la cible.
-						motors.tourner(10,1);
-						compteurDroit +=1;
-						angleRelatifMinimum +=1;
+						motors.tourner(10,5);
+						compteurDroit +=5;
+						angleRelatifMinimum +=5;
 						newdistance = 100*localisation.detecte(sample);
 					}
 					if(newdistance==-100){
-						System.out.println("erreur, le système a ete perdu de vue !");
+						System.out.println("erreur, le systeme a ete perdu de vue !");
 					}
 				}
 				
@@ -128,3 +125,4 @@ public class approche {
 	}
 		
 }
+
