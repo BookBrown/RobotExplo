@@ -25,9 +25,9 @@ public class Pince {
 		/* Tourner de 10° vers la gauche */
 		mouv.tourner(20, 10);
 		/* Avancer de distance - 10 cm */
-		mouv.avancer(10, distance - 12);
+		mouv.avancer(10, distance - 10);
 		/* Tourner de 20° vers la droite */
-		mouv.tourner(10, -15);
+		mouv.tourner(10, -20);
 		/* Avancer de 4cm */
 		mouv.avancer(10, 6);
 		/* Position stock */
@@ -42,9 +42,9 @@ public class Pince {
 		/* Tourner de 10° vers la gauche */
 		mouv.tourner(20, 10);
 		/* Avancer de distance - 3 cm */
-		mouv.avancer(10, distance - 12);
+		mouv.avancer(10, distance - 10);
 		/* Tourner de 20° vers la droite */
-		mouv.tourner(10, -15);
+		mouv.tourner(10, -20);
 		/* Avancer de 4cm */
 		mouv.avancer(10, 6);
 		Motor.D.rotateTo(-500);
