@@ -10,35 +10,65 @@ import lejos.utility.Delay;
 public class MainGlobal {
 	public static void main(String[] args) {
 		
-		EV3ColorSensor Csensor = new EV3ColorSensor(SensorPort.S3);
-		EV3UltrasonicSensor USsensor = new EV3UltrasonicSensor(SensorPort.S4);
+		System.out.println("appuyez pour démarrer");
+		Button.waitForAnyPress();
+		EV3ColorSensor Csensor = new EV3ColorSensor(SensorPort.S1);
+		EV3UltrasonicSensor USsensor = new EV3UltrasonicSensor(SensorPort.S3);
 		
 		//mettre des sampleProvider pour les 2
+		
+		SampleProvider csample = Csensor.getColorIDMode();
+		SampleProvider USsample = USsensor.getDistanceMode();
+		
+		Mouvement mouv = new Mouvement();
+		
 		Borders bord = new Borders();
 		
 		//Initilaisation de la pince
 		Pince pince = new Pince();	
 		
 		//sort de la zone de depart
-		float distance = bord.Init(Csensor, USsensor);
+		float distance = bord.Init(csample, USsample);
+		
+		//definition recupzone
+		
+		boolean isRecuperationZone = true;
 		
 		//commence son parcours
-		distance = bord.parcours(Csensor, USsensor);
 		
+		while (isRecuperationZone) {	
 		
-		//phase d'approche à rajouter
-		
-		
+			distance = bord.parcours(csample, USsample);
+			
+			//phase d'approche à rajouter
+			isRecuperationZone = approcheTo.approcheTarget(USsample, mouv);
+			if (isRecuperationZone) {
+				mouv.tourner(40, 150);
+			}
+		}
 		//recuperation de la premiere balle
 		float distance_float = localisation.detecte(USsensor);	
 		int distance_entiere = (int)distance_float;
 		pince.premiere_recup(distance_entiere);
 		
 		//on cherche la deuxième balle
-		distance = bord.parcours(Csensor, USsensor);
+		distance = bord.parcours(csample, USsample);
+		
+		isRecuperationZone = true;
 		
 		//nouvelle phase d'approche à rajouter
 		
+		while (isRecuperationZone) {	
+			
+			distance = bord.parcours(csample, USsample);
+			
+			//phase d'approche à rajouter
+			isRecuperationZone = approcheTo.approcheTarget(USsample, mouv);
+			if (isRecuperationZone) {
+				mouv.tourner(40, 150);
+			}
+			
+		}
 		
 		//recuperation de la deuxieme balle
 		float distance_float_bis = localisation.detecte(USsensor);	
@@ -47,18 +77,26 @@ public class MainGlobal {
 		
 		
 		//recherche de la zone de recup
-		distance = bord.parcours(Csensor, USsensor);
+		
+		while (!isRecuperationZone) {	
+			
+			distance = bord.parcours(csample, USsample);
+			
+			//phase d'approche à rajouter
+			isRecuperationZone = approcheTo.approcheTarget(USsample, mouv);
+			if (!isRecuperationZone) {
+				mouv.tourner(40, 150);
+			}
+			
+		}
 		
 		//phase d'approche à rajouter (on arrive à 20 cm de la zone)
 		
-		
-		
 		//demi tour et marche arrière 
-		Mouvement mouv = new Mouvement();
 		mouv.tourner(30, 180);
 		DetectionZone zone = new DetectionZone();
-		EV3TouchSensor bouton_g = new EV3TouchSensor(SensorPort.S1);
-		EV3TouchSensor bouton_d = new EV3TouchSensor(SensorPort.S2);
+		EV3TouchSensor bouton_g = new EV3TouchSensor(SensorPort.S2);
+		EV3TouchSensor bouton_d = new EV3TouchSensor(SensorPort.S4);
 		while ((!zone.is_pressed(bouton_g)) && (!zone.is_pressed(bouton_d))){
 			mouv.reculer(5, 1);
 		}
