@@ -18,13 +18,11 @@ public class localisation {
 		if (sample.length == 0){
 			return -1;
 		}
-		int index = sample.length - 1;
-		while (!Float.isFinite(sample[index]) || sample[index] == 0){
-			if(index == 0){
+		
+		if(sample[0]>0.8 || sample[0] == 0){
 				return -1;
-			}
-			index--;
+		} else {
+			return sample[0];
 		}
-		return sample[index];
 	}
 }
