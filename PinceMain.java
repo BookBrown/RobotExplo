@@ -1,58 +1,46 @@
 package robot;
-import lejos.hardware.Battery;
+
 import lejos.hardware.Button;
-import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.LCD;
-import lejos.hardware.motor.Motor;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
-import lejos.hardware.sensor.SensorModes;
+import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
+import lejos.hardware.port.SensorPort;
 
 
 public class PinceMain {
 	public static void main(String[] args) {
 		
-		Pince pince = new Pince();
 		
 		// get a port instance
-		Port port = LocalEV3.get().getPort("S4");
-
+		//Port port = LocalEV3.get().getPort("S4");
+		
 		// Get an instance of the Ultrasonic EV3 sensor
-		SensorModes sensor = new EV3UltrasonicSensor(port);
+		EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(SensorPort.S3);
 		
-		float distance_float = localisation.detecte(sensor);	
+		sensor.enable(); 	
+				
+		// get an instance of this sensor in measurement mode
+		SampleProvider distanceSample = sensor.getDistanceMode();
 		
-		int distance_entiere = (int)(distance_float*100);
+		float distance = localisation.detecte(distanceSample);
 		
-		pince.premiere_recup(distance_entiere);
+		System.out.println(distance);
 		
-		Delay.msDelay(5000);
+		Delay.msDelay(4000);
+		//initialise the motors
+		Mouvement motors = new Mouvement();
 		
-		float distance_float_bis = localisation.detecte(sensor);	
+		//on fait maintenant la phase d'approche (on suppose avoir repéré le robot).
 		
-		int distance_entiere_bis = (int)(distance_float_bis*100);
+		approche.approcheTarget(distanceSample, motors);
 		
-		pince.deuxieme_recup(distance_entiere_bis);
+		System.out.println("on est sortis de approcheTarget");
 		
-		Mouvement mouv = new Mouvement();
-		
-		mouv.avancer(20, -20);
-		
-		pince.largage();
-		
-		pince.butee();
-		
-		// get a port instance
-		//Port port = LocalEV3.get().getPort("S2");
-
-		// Get an instance of the Ultrasonic EV3 sensor
-		//SensorModes sensor = new EV3UltrasonicSensor(port);
-		
-		//float distance = localisation.detecte(sensor);
-		
-		//System.out.println(distance);
+		sensor.disable();
+				
+		sensor.close();
 
 	}
 }
