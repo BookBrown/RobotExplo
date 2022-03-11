@@ -10,7 +10,7 @@ import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 
-public class Approche {
+public class approcheTo {
 
 	
 	public static boolean approcheTarget(SampleProvider sample, Mouvement motors){
@@ -42,18 +42,18 @@ public class Approche {
 		}
 		
 		boolean zone_de_recup = false;
-		motors.tourner(10, 31);
+		motors.tourner(10, 22);
 		distance = 100*localisation.detecte(sample);
 		if (distance < 40 && distance > 20) {
 			zone_de_recup = true;
 		}
-		motors.tourner(10, -62);
+		motors.tourner(10, -44);
 		distance = 100*localisation.detecte(sample);
 		if (distance < 40 && distance > 20) {
 			zone_de_recup = true;
 		}
 		
-		motors.tourner(10, 31);
+		motors.tourner(10, 22);
 		
 		return zone_de_recup;
 	}
