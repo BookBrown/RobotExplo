@@ -1,5 +1,3 @@
-package robot;
-
 import java.time.Duration;
 import java.time.Instant;
 
@@ -17,42 +15,44 @@ public class MainGlobal {
 		
 		Borders bord = new Borders();
 		
-		float distance = bord.Init(Csensor, USsensor);
-		// ajouter l'initilaisation de la pince
+		//Initilaisation de la pince
+		Pince pince = new Pince();	
 		
+		//sort de la zone de depart
+		float distance = bord.Init(Csensor, USsensor);
+		
+		//commence son parcours
 		distance = bord.parcours(Csensor, USsensor);
 		
 		
-		//phase d'approche à rajouter
+		//phase d'approche Ã  rajouter
 		
 		
-		Pince pince = new Pince();
-		
+		//recuperation de la premiere balle
 		float distance_float = localisation.detecte(USsensor);	
 		int distance_entiere = (int)distance_float;
-		
 		pince.premiere_recup(distance_entiere);
 		
-		//on cherche la deuxième balle
+		//on cherche la deuxiÃ¨me balle
 		distance = bord.parcours(Csensor, USsensor);
 		
-		//nouvelle phase d'approche à rajouter
+		//nouvelle phase d'approche Ã  rajouter
 		
 		
+		//recuperation de la deuxieme balle
 		float distance_float_bis = localisation.detecte(USsensor);	
 		int distance_entiere_bis = (int)distance_float_bis;
-		
 		pince.deuxieme_recup(distance_entiere_bis);
 		
 		
 		//recherche de la zone de recup
 		distance = bord.parcours(Csensor, USsensor);
 		
-		//phase d'approche à rajouter (on arrive à 20 cm de la zone)
+		//phase d'approche Ã  rajouter (on arrive Ã  20 cm de la zone)
 		
 		
 		
-		//demi tour et marche arrière 
+		//demi tour et marche arriÃ¨re 
 		Mouvement mouv = new Mouvement();
 		mouv.tourner(30, 180);
 		DetectionZone zone = new DetectionZone();
@@ -70,11 +70,17 @@ public class MainGlobal {
 				mouv.tourner(10, 2);
 			}
 		}
-		
-		//dépot des échantillons
+	
+		//dÃ©pot des Ã©chantillons
 		pince.largage();
 		pince.butee();
 		
+		
+		//fermer les capteurs
+		Csensor.close();
+		USsensor.close();
+		bouton_g.close();
+		bouton_d.close();
 		}
 	}
 }
