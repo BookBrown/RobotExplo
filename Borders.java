@@ -22,10 +22,9 @@ public class Borders {
 		this.echantillon = false;
 	}
 	
-	public float Init(SampleProvider csensor){
+	public float Init(SampleProvider csensor, SampleProvider USsensor ){
 		
 		float[] coul = new float[1];
-		//, SampleProvider USsensor 
 		
 		Mouvement mouv = new Mouvement();
 		
@@ -39,32 +38,30 @@ public class Borders {
 			distance = -2;
 		}
 		else{
-			mouv.avancer(10,40);
-			//distance = localisation.detecte(USsensor);
-			//if (distance != -1){
-				//echantillon = true;
-				//return distance;
-				//}
-			mouv.tourner(10,90);
-			//distance = localisation.detecte(USsensor);
-			//if (distance != -1){
-				//echantillon = true;
-				//return distance;
-				//}
-			mouv.tourner(10, 180);
-			//distance = localisation.detecte(USsensor);
-			//if (distance != -1){
-				//echantillon = true;
-				//return distance;
-				//}
+			mouv.avancer(10,60);
+			distance = localisation.detecte(USsensor);
+			if (distance != -1){
+				echantillon = true;
+				return distance;
+				}
+			mouv.tourner(30,85);
+			distance = localisation.detecte(USsensor);
+			if (distance != -1){
+				echantillon = true;
+				return distance;
+				}
+			mouv.tourner(30, 170);
+			distance = localisation.detecte(USsensor);
+			if (distance != -1){
+				echantillon = true;
+				return distance;
+				}
 		}
         return distance;
 	}
 	
 	
-	public float parcours(SampleProvider Csensor){
-		
-		//SampleProvider USsensor
+	public float parcours(SampleProvider Csensor, SampleProvider USsensor){
 		
 		Mouvement mouv = new Mouvement();
 		
@@ -78,29 +75,29 @@ public class Borders {
 		float[] coul = new float[1];
 		int t = 0;
 		
-		while (! echantillon && (t<3)){
+		while (! echantillon && (t<5)){
 			t++;
 			//timelapse < 30000
 			
-			//int d = 0;
+			int d = 0;
 			Csensor.fetchSample(coul,0);
 			while (coul[0] == white){
 				mouv.avancer(10,5);
 				Csensor.fetchSample(coul,0);
-				//d++;
-				//if(d == 10){
-					//distance = localisation.detecte(USsensor);
-					//if (distance != -1){
-						//echantillon = true;
-						//return distance;
-						//}
-					//d=0;
-				//}
+				d++;
+				if(d == 10){
+					distance = localisation.detecte(USsensor);
+					if (distance != -1){
+						echantillon = true;
+						return distance;
+						}
+					d=0;
+				}
 			}
 			
 			int compteur = 0;
 			
-			if (droite == true){		
+			if (droite == true){	
 				mouv.avancer(10,-20);
 				mouv.tourner(10,90);
 				Csensor.fetchSample(coul,0);
@@ -110,7 +107,7 @@ public class Borders {
 					Csensor.fetchSample(coul,0);
 				}
 				mouv.tourner(10,90);
-				//distance = localisation.detecte(USsensor);
+				distance = localisation.detecte(USsensor);
 				droite = false;
 			}
 			else {
@@ -122,14 +119,14 @@ public class Borders {
 					Csensor.fetchSample(coul,0);
 				}
 				mouv.tourner(10,-90);
-				//distance = localisation.detecte(USsensor);
+				distance = localisation.detecte(USsensor);
 				droite = true;
 			}
 			
-			//if (distance != -1){
-				//echantillon = true;
-				//return distance;
-				//}
+			if (distance != -1){
+				echantillon = true;
+				return distance;
+				}
 			
 			//finish = Instant.now();
 			//timelapse = Duration.between(start,finish).toMillis();
