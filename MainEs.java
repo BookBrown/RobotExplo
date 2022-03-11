@@ -16,8 +16,8 @@ public class MainEs {
 		//Port port = LocalEV3.get().getPort("S4");
 		
 		// Get an instance of the Ultrasonic EV3 sensor
-		EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(SensorPort.S4);
-		
+		EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(SensorPort.S3);
+				
 		// get an instance of this sensor in measurement mode
 		SampleProvider distanceSample = sensor.getDistanceMode();
 		
@@ -25,7 +25,6 @@ public class MainEs {
 		
 		System.out.println(distance);
 		
-		Delay.msDelay(4000);
 		
 		//initialise the motors
 		Mouvement motors = new Mouvement();
@@ -34,7 +33,8 @@ public class MainEs {
 		
 		approche.approcheTarget(distanceSample, motors);
 		
-		
+		System.out.println("on est sortis de approcheTarget");
+				
 		sensor.close();
 
 	}
