@@ -13,6 +13,7 @@ public class MainGlobal {
 		EV3ColorSensor Csensor = new EV3ColorSensor(SensorPort.S3);
 		EV3UltrasonicSensor USsensor = new EV3UltrasonicSensor(SensorPort.S4);
 		
+		//mettre des sampleProvider pour les 2
 		Borders bord = new Borders();
 		
 		//Initilaisation de la pince
