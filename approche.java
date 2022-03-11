@@ -14,9 +14,9 @@ public class approche {
 		int angleRelatifMinimum;
 		int compteurGauche;
 		int compteurDroit;
-		//boolean isRecuperationZone=false;
+		boolean isRecuperationZone=false;
 		
-		while((distance >30)&&(distance<50)){
+		while((distance >30)&&(distance<80)){
 			
 			angleRelatifMinimum = 0;
 			compteurGauche = 0;
@@ -31,9 +31,10 @@ public class approche {
 			while ((newdistance==-100)&&(compteurGauche <3)){
 				
 				motors.tourner(30,-15);
-				compteurGauche +=1;
 				angleRelatifMinimum +=-15;
 				newdistance = 100*localisation.detecte(sample);
+				compteurGauche +=1;
+
 			}
 			
 			if(newdistance==-100){
@@ -46,9 +47,10 @@ public class approche {
 				while ((newdistance==-100)&&(compteurDroit <3)){
 					
 					motors.tourner(30,15);
-					compteurDroit +=1;
 					angleRelatifMinimum +=15;
 					newdistance = 100*localisation.detecte(sample);
+					compteurDroit +=1;
+
 				}
 				
 				if(newdistance==-100){ //ce cas ne devrait jamais se produire comme on avance de 10 cm en 10 cm.
@@ -58,9 +60,9 @@ public class approche {
 						angleRelatifMinimum +=15;
 						newdistance = 100*localisation.detecte(sample);
 					}
-					if(newdistance==-100){
-						System.out.println("erreur, le systeme a ete perdu de vue !");
-					}
+					//if(newdistance==-100){
+					//	System.out.println("erreur, le systeme a ete perdu de vue !");
+					//}
 				}
 				
 				
@@ -72,7 +74,7 @@ public class approche {
 		}
 		
 		//On teste ci-dessous si on est face a la zone de récupération ou un capteur.
-		/*boolean seenLeft= false;
+		boolean seenLeft= false;
 		boolean seenRight= false;
 		motors.tourner(30,-25);
 		newdistance= 100*localisation.detecte(sample);
@@ -86,7 +88,7 @@ public class approche {
 		}
 		
 		isRecuperationZone = seenRight&&seenLeft; //on a bien que si on détecte à 25 degres a gauche et a droite, on est face a la zone de recuperation
-		*/
+		
 			
 		while((distance > 20)&&(distance<30)){
 			
@@ -141,7 +143,7 @@ public class approche {
 			distance = newdistance;
 		}
 		
-		//return isRecuperationZone;
+		System.out.println("isRecuperationZone :"+isRecuperationZone);
 	}
 		
 }
