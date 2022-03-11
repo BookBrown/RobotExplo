@@ -28,10 +28,10 @@ public class Borders {
 		
 		Mouvement mouv = new Mouvement();
 		
-        float distance = -1;
+      float distance = -1;
 
-        csensor.fetchSample(coul,0);
-        
+      csensor.fetchSample(coul,0);
+      
 		if (coul[0] != black){
 			System.out.println("le robot n'est pas dans la zone de depart");
 			Delay.msDelay(5000);
@@ -57,7 +57,7 @@ public class Borders {
 				return distance;
 				}
 		}
-        return distance;
+      return distance;
 	}
 	
 	
@@ -65,7 +65,7 @@ public class Borders {
 		
 		Mouvement mouv = new Mouvement();
 		
-        float distance = -1;
+      float distance = -1;
 		boolean droite = true;
 		
 		//Instant start = Instant.now();
@@ -75,7 +75,7 @@ public class Borders {
 		float[] coul = new float[1];
 		int t = 0;
 		
-		while (! echantillon && (t<5)){
+		while (! echantillon){
 			t++;
 			//timelapse < 30000
 			
@@ -131,6 +131,6 @@ public class Borders {
 			//finish = Instant.now();
 			//timelapse = Duration.between(start,finish).toMillis();
 		}
-        return distance;
+      return distance;
 	}
 }
